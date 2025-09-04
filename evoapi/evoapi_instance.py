@@ -27,6 +27,7 @@ class EvoAPI:
                 return {"Error": f"Ocurrio un error inesperado: {req_err}"}
 
     def create_instance(self, name_instance, token, qrcode, number, integration):
+
         payload = {
                    "instanceName":name_instance, 
                    "token":token, 
@@ -34,7 +35,12 @@ class EvoAPI:
                    "number":number,
                    "integration": integration,
                     }
+        
         return self._request("POST", "/instance/create", json=payload)
+    
+    def fetch_instances(self):
+        return self._request("GET", "/instance/fetchInstances")
+        
 
 load_dotenv()
 
@@ -46,9 +52,8 @@ TOKEN = "JAKLJSD423490293J"
 INTEGRATION = "WHATSAPP-BAILEYS"
 QR = True
 
-print(URL_EVOAPI)
 
-api_client = EvoAPI(URL_EVOAPI, KEY_EVOAPI)
-instance_create = api_client.create_instance(NAME_INSTANCE, TOKEN, QR, NUMBER_PHONE, INTEGRATION)
-print(instance_create)
+api_instance = EvoAPI(URL_EVOAPI, KEY_EVOAPI)
+consulta_intancia = api_instance.fetch_instances()
+print(consulta_intancia)
     
