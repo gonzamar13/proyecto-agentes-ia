@@ -40,13 +40,19 @@ class EvoAPI:
     
     def fetch_instances(self):
         return self._request("GET", "/instance/fetchInstances")
+
+    def connect_instances(self, name_instance, number_phone): 
+        querystring = {"number":number_phone}
+        return self._request("GET", f"/instance/connect/{name_instance}", params=querystring)
         
+    def qr_connect(self, name_instance:str):
+        return self._request("GET", f"/instance/qr/{name_instance}")
 
 load_dotenv()
 
 URL_EVOAPI = os.getenv("BASE_URL")
 KEY_EVOAPI = os.getenv("API_KEY_EVOLU")
-NAME_INSTANCE = "Nueva_intancia_prueba_2"
+NAME_INSTANCE = "Nueva_intancia_prueba_1"
 NUMBER_PHONE = "595991805304"
 TOKEN = "JAKLJSD423490293J"
 INTEGRATION = "WHATSAPP-BAILEYS"
@@ -54,6 +60,7 @@ QR = True
 
 
 api_instance = EvoAPI(URL_EVOAPI, KEY_EVOAPI)
-consulta_intancia = api_instance.fetch_instances()
-print(consulta_intancia)
-    
+conexion= api_instance.connect_instances(NAME_INSTANCE, NUMBER_PHONE)
+consulta_qr = api_instance.qr_connect(NAME_INSTANCE)
+print(conexion)
+print(consulta_qr)
